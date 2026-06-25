@@ -1,249 +1,299 @@
-🏃 Endless Runner Game
-https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white
-https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white
-https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white
+Endless Runner Game 🏃
+A futuristic endless runner Android game built with Kotlin and Jetpack Compose with Bluetooth hardware controller support.
 
-A futuristic endless runner game with Bluetooth hardware controller support
+🚀 Project Overview
+Endless Runner is a high-speed arcade game where players dodge obstacles in a three-lane track. The game features dual control options - touch screen controls and Bluetooth hardware controller (ESP32/Arduino) support, making it both accessible and interactive.
 
-📱 Features
-🎮 Dual Control - Touch screen + Bluetooth hardware (ESP32/Arduino)
+The game includes real-time Bluetooth communication, dynamic difficulty scaling, and a sleek cyberpunk-themed UI with neon glow effects.
 
-🎨 Cyberpunk UI - Neon glows, glass morphism, smooth animations
+✨ Features
+🎮 Game Mechanics
+Endless running with infinite gameplay
 
-⚡ Dynamic Difficulty - Speed increases with your score
+3-lane obstacle dodging system
 
-🏆 High Score - Track your best performance
+Dynamic difficulty progression
 
-📡 Real-time Bluetooth - See hardware commands instantly
+Multiple obstacle types (Triangle, Square, Circle)
 
-🔄 3 Control Modes - Touch only, Hardware only, or Both
+Collision detection with particle effects
 
-🛠️ Tech Stack
+High score tracking with local storage
+
+🎯 Control Modes
+Touch Controls: On-screen arrow buttons
+
+Hardware Controls: Bluetooth ESP32/Arduino controller
+
+Dual Mode: Both touch and hardware work simultaneously
+
+Real-time Mode Switching: Toggle between control modes
+
+🎨 UI/UX Features
+Cyberpunk-themed design with neon glows
+
+Glass morphism effect on cards
+
+Animated background stars
+
+Pulsing glow animations
+
+Responsive layout for all screen sizes
+
+Real-time Bluetooth command display
+
+📡 Bluetooth Integration
+Connect to ESP32/Arduino via Bluetooth
+
+Receive real-time hardware commands
+
+Send commands back to hardware
+
+Connection status indicator
+
+Device name display
+
+🛠️ Technologies Used
 Language: Kotlin
 
-UI: Jetpack Compose
+UI Framework: Jetpack Compose
+
+Architecture: MVVM with Clean Architecture
 
 Bluetooth: Android Bluetooth API
 
-Concurrency: Coroutines
+Concurrency: Kotlin Coroutines
+
+Animations: Compose Animation API
 
 Minimum SDK: Android 6.0 (API 23)
 
-🚀 Quick Start
-1. Clone & Open
+📂 Project Structure
+text
+app/src/main/java/com/example/endlessrunner/
+├── MainActivity.kt              # Main game activity with Bluetooth
+├── Data Classes
+│   ├── Obstacle.kt              # Obstacle model with types
+│   └── Particle.kt              # Particle system for effects
+├── UI Components
+│   ├── EndlessRunnerGame.kt     # Main game composable
+│   ├── ControlButton.kt         # Touch control buttons
+│   └── ControlModeChip.kt       # Mode selector chips
+└── Bluetooth Manager
+    └── (Integrated in MainActivity)
+🎮 Game Logic
+Player Movement
+Player moves between 3 lanes (0, 1, 2)
+
+Touch buttons or hardware commands trigger movement
+
+Smooth lane switching with visual feedback
+
+Obstacle System
+kotlin
+// Obstacle spawn logic
+spawnCooldown++
+val spawnRate = maxOf(60, 120 - (score / 10))
+
+if (spawnCooldown > spawnRate && obstacles.size < 3) {
+    val availableLanes = (0 until lanes).filter { 
+        it !in obstacles.map { it.lane } 
+    }
+    obstacles += Obstacle(availableLanes.random(), -playerHeight)
+}
+Collision Detection
+Pixel-perfect hitbox detection
+
+80% hitbox size for fair gameplay
+
+Triggers explosion particles on collision
+
+Score & Difficulty
+Score increases every frame
+
+Speed increases with score (8f → 18f)
+
+Spawn rate decreases with score
+
+🎨 UI Design
+Theme Colors
+kotlin
+// Cyberpunk Theme
+Color(0xFF0A0F1E)      // Background
+Color.Cyan             // Primary accent
+Color.Blue             // Secondary accent
+Color.White            // Text color
+Color.Cyan.copy(alpha) // Glow effects
+Animations
+Glow Effect: Pulsing cyan glow on UI elements
+
+Stars: Animated background particles
+
+Lane Lines: Moving dashed lines with parallax
+
+Game Over: Screen shake effect
+
+Transitions: Smooth fade and scale animations
+
+📱 Screens
+Start Screen: Game title with instructions and connect button
+
+Gameplay: Main game canvas with controls
+
+Game Over: Score display with restart and menu options
+
+Bluetooth: Connection status and control mode selector
+
+🔌 Hardware Setup
+Components Required
+ESP32 or Arduino board
+
+HC-05 or HC-06 Bluetooth module
+
+2 Push buttons
+
+Jumper wires
+
+Breadboard
+
+Circuit Diagram
+text
+ESP32/Arduino      HC-05/06 Bluetooth Module
+┌─────────────┐    ┌─────────────────────┐
+│ VCC (3.3V)  ├────┤ VCC                 │
+│ GND         ├────┤ GND                 │
+│ TX (10)     ├────┤ RX                  │
+│ RX (11)     ├────┤ TX                  │
+└─────────────┘    └─────────────────────┘
+
+Push Buttons:
+LEFT Button → PIN 2 (with pull-up)
+RIGHT Button → PIN 3 (with pull-up)
+Arduino/ESP32 Code
+cpp
+#include <SoftwareSerial.h>
+
+SoftwareSerial bluetooth(10, 11); // RX, TX
+
+const int LEFT_BUTTON = 2;
+const int RIGHT_BUTTON = 3;
+
+void setup() {
+  Serial.begin(9600);
+  bluetooth.begin(9600);
+  
+  pinMode(LEFT_BUTTON, INPUT_PULLUP);
+  pinMode(RIGHT_BUTTON, INPUT_PULLUP);
+  
+  Serial.println("Controller Ready!");
+}
+
+void loop() {
+  // Send left command
+  if(digitalRead(LEFT_BUTTON) == LOW) {
+    bluetooth.println("L");
+    delay(200);
+  }
+  
+  // Send right command
+  if(digitalRead(RIGHT_BUTTON) == LOW) {
+    bluetooth.println("R");
+    delay(200);
+  }
+}
+📡 Bluetooth Commands
+Commands Sent from Hardware
+Command	Action
+L, l, LEFT, 0	Move player left
+R, r, RIGHT, 1	Move player right
+Commands Sent to Hardware
+Command	Purpose
+0	Move left signal
+1	Move right signal
+🔧 Setup Instructions
+1. Clone Repository
 bash
 git clone https://github.com/jeren-dev/endless-runner.git
 cd endless-runner
-Open in Android Studio and click Run ▶️
-
-2. Hardware Setup (Optional)
-ESP32/Arduino Code:
-
-cpp
-#include <SoftwareSerial.h>
-
-SoftwareSerial bluetooth(10, 11); // RX, TX
-
-void setup() {
-  bluetooth.begin(9600);
-  pinMode(2, INPUT_PULLUP); // Left button
-  pinMode(3, INPUT_PULLUP); // Right button
-}
-
-void loop() {
-  if(digitalRead(2) == LOW) {
-    bluetooth.println("L");
-    delay(200);
-  }
-  if(digitalRead(3) == LOW) {
-    bluetooth.println("R");
-    delay(200);
-  }
-}
-Circuit:
-
-text
-HC-05/06 → ESP32
-VCC → 3.3V
-GND → GND
-TX → RX (pin 10)
-RX → TX (pin 11)
-
-Buttons:
-Left → Pin 2
-Right → Pin 3
-3. Update MAC Address
+2. Update MAC Address
 kotlin
 // In MainActivity.kt
 private val ESP32_MAC = "20:E7:C8:9E:4E:76" // 🔥 Replace with your ESP32 MAC
-🎮 How to Play
-Start: Tap the glowing play button
+3. Pair Bluetooth Device
+Go to Android Settings → Bluetooth
 
-Move: Swipe or use arrow buttons / hardware controller
+Turn on Bluetooth
 
-Dodge: Avoid obstacles in 3 lanes
+Pair with ESP32/HC-05 device
 
-Score: Higher score = faster speed
+Default PIN: 1234 or 0000
 
-Restart: Game over → restart or main menu
+4. Build & Run
+Open project in Android Studio
 
-Control Modes
-Mode	Touch	Hardware
-Touch	✅	❌
-Hardware	❌	✅
-Both	✅	✅
-📱 Permissions
-The app requires these permissions (requested at runtime):
+Click Run or press Shift + F10
 
-Bluetooth Connect & Scan
+Grant Bluetooth permissions
 
-Location (for Bluetooth scanning)
+Click "Connect" in the app
 
 🐛 Troubleshooting
-Issue	Fix
-Can't connect to ESP32	Check MAC address & Bluetooth is ON
-No data received	Verify baud rate (9600) & wiring
-App crashes	Clear cache & restart
-Laggy gameplay	Close background apps
-📁 Project Structure
-text
-app/src/main/java/com/example/endlessrunner/
-├── MainActivity.kt       # Main game + Bluetooth
-├── Game Logic           # Obstacles, particles, collision
-└── UI Components        # Buttons, cards, animations
-📝 License
-MIT License - Free to use, modify, and distribute
+Issue	Solution
+Can't connect to ESP32	Check MAC address, ensure Bluetooth is ON, pair device first
+No data received	Verify baud rate (9600), check wiring, restart ESP32
+Connection timeout	Move closer to ESP32, check power supply
+App crashes	Clear app cache, restart device, check permissions
+Laggy gameplay	Close background apps, reduce obstacle count
+UI glitches	Update Android Studio, rebuild project
+🔮 Future Improvements
+Multiplayer mode via Bluetooth
 
-👨‍💻 Author
-Jeren Dev
+Power-ups and collectibles
+
+Different game environments
+
+Sound effects and background music
+
+Cloud high score sync
+
+Customizable player skins
+
+Leaderboard integration
+
+Gesture controls
+
+Haptic feedback
+
+AR mode integration
+
+📊 Performance Optimizations
+Efficient particle system
+
+Object pooling for obstacles
+
+Optimized canvas rendering
+
+Battery-aware animations
+
+Memory leak prevention
+
+👨‍💻 Developer
+github.com/jeren-dev
 
 GitHub: @jeren-dev
 
-⭐ Show Your Support
-If you like this project, please give it a ⭐ on GitHub!
+Project: Endless Runner
+
+📄 License
+This project is for learning and development purposes. MIT License - Free to use, modify, and distribute.
+
+🙏 Acknowledgments
+Jetpack Compose for modern UI
+
+Kotlin Coroutines for async operations
+
+Android Bluetooth API for hardware integration
+
+Open-source community for various resources
 
 Made with ❤️ and Kotlin
-
-Quick Copy for GitHub
-Just copy this entire block and paste it as README.md in your repository:
-
-markdown
-# 🏃 Endless Runner Game
-
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white)
-![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
-
-> A futuristic endless runner game with Bluetooth hardware controller support
-
-## 📱 Features
-
-- 🎮 **Dual Control** - Touch screen + Bluetooth hardware (ESP32/Arduino)
-- 🎨 **Cyberpunk UI** - Neon glows, glass morphism, smooth animations
-- ⚡ **Dynamic Difficulty** - Speed increases with your score
-- 🏆 **High Score** - Track your best performance
-- 📡 **Real-time Bluetooth** - See hardware commands instantly
-- 🔄 **3 Control Modes** - Touch only, Hardware only, or Both
-
-## 🛠️ Tech Stack
-
-- **Language**: Kotlin
-- **UI**: Jetpack Compose
-- **Bluetooth**: Android Bluetooth API
-- **Concurrency**: Coroutines
-- **Minimum SDK**: Android 6.0 (API 23)
-
-## 🚀 Quick Start
-
-### 1. Clone & Open
-```bash
-git clone https://github.com/jeren-dev/endless-runner.git
-cd endless-runner
-Open in Android Studio and click Run ▶️
-
-2. Hardware Setup (Optional)
-ESP32/Arduino Code:
-
-cpp
-#include <SoftwareSerial.h>
-
-SoftwareSerial bluetooth(10, 11); // RX, TX
-
-void setup() {
-  bluetooth.begin(9600);
-  pinMode(2, INPUT_PULLUP); // Left button
-  pinMode(3, INPUT_PULLUP); // Right button
-}
-
-void loop() {
-  if(digitalRead(2) == LOW) {
-    bluetooth.println("L");
-    delay(200);
-  }
-  if(digitalRead(3) == LOW) {
-    bluetooth.println("R");
-    delay(200);
-  }
-}
-Circuit:
-
-text
-HC-05/06 → ESP32
-VCC → 3.3V
-GND → GND
-TX → RX (pin 10)
-RX → TX (pin 11)
-
-Buttons:
-Left → Pin 2
-Right → Pin 3
-3. Update MAC Address
-kotlin
-// In MainActivity.kt
-private val ESP32_MAC = "20:E7:C8:9E:4E:76" // 🔥 Replace with your ESP32 MAC
-🎮 How to Play
-Start: Tap the glowing play button
-
-Move: Swipe or use arrow buttons / hardware controller
-
-Dodge: Avoid obstacles in 3 lanes
-
-Score: Higher score = faster speed
-
-Restart: Game over → restart or main menu
-
-Control Modes
-Mode	Touch	Hardware
-Touch	✅	❌
-Hardware	❌	✅
-Both	✅	✅
-📱 Permissions
-The app requires these permissions (requested at runtime):
-
-Bluetooth Connect & Scan
-
-Location (for Bluetooth scanning)
-
-🐛 Troubleshooting
-Issue	Fix
-Can't connect to ESP32	Check MAC address & Bluetooth is ON
-No data received	Verify baud rate (9600) & wiring
-App crashes	Clear cache & restart
-Laggy gameplay	Close background apps
-📁 Project Structure
-text
-app/src/main/java/com/example/endlessrunner/
-├── MainActivity.kt       # Main game + Bluetooth
-├── Game Logic           # Obstacles, particles, collision
-└── UI Components        # Buttons, cards, animations
-📝 License
-MIT License - Free to use, modify, and distribute
-
-👨‍💻 Author
-Jeren Dev
-
-GitHub: @jeren-dev
-
-⭐ Show Your Support
-If you like this project, please give it a ⭐ on GitHub!
-
