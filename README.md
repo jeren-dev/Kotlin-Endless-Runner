@@ -1,126 +1,228 @@
-🚀 Endless Runner Game
+# 🚀 Endless Runner Game
 
-A futuristic endless runner Android game built using Kotlin + Jetpack Compose with Bluetooth hardware controller (ESP32/Arduino) support.
+> **A futuristic Android endless runner game built using Kotlin + Jetpack Compose with Bluetooth (ESP32/Arduino) controller support.**
 
-📌 Project Overview
+---
 
-Endless Runner is a fast-paced arcade game where players dodge obstacles in a 3-lane track.
-It supports both touch controls and Bluetooth hardware controls, making gameplay more interactive and unique.
+# 📌 Project Overview
 
-The game includes real-time Bluetooth communication, dynamic difficulty scaling, and a cyberpunk neon UI.
+**Endless Runner** is a fast-paced arcade game where players dodge obstacles across a **3-lane track**. The game supports both **touch controls** and **Bluetooth hardware controllers (ESP32/Arduino)**, providing an engaging hybrid gaming experience.
 
-✨ Features
-🎮 Game Mechanics
-Endless infinite running gameplay
-3-lane obstacle system
-Dynamic difficulty increase over time
-Multiple obstacle types
-Collision detection system
-High score tracking (local storage)
+Featuring a **Cyberpunk Neon UI**, dynamic difficulty scaling, particle animations, and real-time Bluetooth communication, the game delivers a modern arcade experience on Android.
 
+---
 
-🎯 Control System
-Touch screen controls (left / right buttons)
-Bluetooth ESP32 / Arduino controller support
-Dual input mode (both work together)
-Real-time control switching
+# ✨ Features
 
+## 🎮 Game Mechanics
 
-🎨 UI / UX
-Cyberpunk neon theme
-Glassmorphism UI effects
-Animated background particles
-Smooth transitions & animations
-Responsive layout
-📡 Bluetooth Integration
-Connect ESP32 / HC-05 module
-Real-time command communication
-Connection status indicator
-Device name display
-Send & receive commands
+* ♾️ Endless infinite running gameplay
+* 🛣️ 3-lane movement system
+* 🚧 Multiple obstacle types
+* 📈 Dynamic difficulty scaling
+* 💥 Collision detection system
+* 🏆 Local high score storage
 
+---
 
-🛠️ Tech Stack
-Language: Kotlin
-UI: Jetpack Compose
-Architecture: MVVM
-Bluetooth: Android Bluetooth API
-Concurrency: Kotlin Coroutines
-Animations: Compose Animation API
-Min SDK: 23 (Android 6.0)
+## 🎯 Control System
 
+* 📱 Touch controls (Left / Right)
+* 📡 Bluetooth controller support (ESP32 / Arduino)
+* 🔄 Dual input mode
+* ⚡ Instant input switching
 
-📂 Project Structure
-app/src/main/java/com/example/endlessrunner/
-├── MainActivity.kt
-├── Obstacle.kt
-├── Particle.kt
-├── EndlessRunnerGame.kt
-├── ControlButton.kt
-├── ControlModeChip.kt
+---
 
+## 🎨 UI / UX
 
-🎮 Game Logic
-🧍 Player Movement
-3 lanes (0, 1, 2)
-Left / Right movement via touch or hardware
-Smooth lane switching
+* 🌌 Cyberpunk Neon Theme
+* 🪟 Glassmorphism panels
+* ✨ Animated particle background
+* 🎬 Smooth Compose animations
+* 📱 Responsive layouts
 
+---
 
-🚧 Obstacle System
-Random lane spawning
-Increasing difficulty over time
-Max obstacle control for fairness
+## 📡 Bluetooth Integration
 
+* 🔗 Connect ESP32 / HC-05 / HC-06
+* 📤 Send commands
+* 📥 Receive commands
+* 📶 Live connection status
+* 📱 Connected device display
 
-💥 Collision System
-Pixel-based hit detection
-80% hitbox fairness logic
-Explosion particle effect on crash
+---
 
+# 🛠️ Tech Stack
 
-🏆 Score System
-Score increases continuously
-Speed increases with score
-Spawn rate decreases gradually
+| Technology   | Used                  |
+| ------------ | --------------------- |
+| Language     | Kotlin                |
+| UI           | Jetpack Compose       |
+| Architecture | MVVM                  |
+| Bluetooth    | Android Bluetooth API |
+| Concurrency  | Kotlin Coroutines     |
+| Animation    | Compose Animation API |
+| Minimum SDK  | Android 6.0 (API 23)  |
 
+---
 
-🎨 UI Design
-🌈 Theme Colors
-Dark cyberpunk background
-Cyan neon highlights
-Glow effects
-Glass UI panels
+# 📂 Project Structure
 
+```text
+app/
+└── src/
+    └── main/
+        └── java/
+            └── com/example/endlessrunner/
+                ├── MainActivity.kt
+                ├── EndlessRunnerGame.kt
+                ├── Obstacle.kt
+                ├── Particle.kt
+                ├── ControlButton.kt
+                └── ControlModeChip.kt
+```
 
-✨ Animations
-Pulsing glow effects
-Moving star background
-Lane motion effects
-Game over shake animation
+---
 
+# 🎮 Game Logic
 
-📱 Screens
-🏁 Start Screen (Play + Connect Bluetooth)
-🎮 Gameplay Screen
-💀 Game Over Screen
-📡 Bluetooth Connection Panel
-🔌 Hardware Setup
+## 🧍 Player Movement
 
+* 3 lane system (0, 1, 2)
+* Smooth lane switching
+* Touch controls
+* Bluetooth hardware controls
 
-Components
-ESP32 / Arduino
-HC-05 / HC-06 Bluetooth module
-Push buttons (2)
-Jumper wires
-Circuit
-ESP32/Arduino → Bluetooth Module
+---
 
-VCC → VCC  
-GND → GND  
-TX  → RX  
-RX  → TX  
+## 🚧 Obstacle System
 
-Buttons:
-Left  → PIN 2  
-Right → PIN 3
+* Random lane spawning
+* Dynamic spawn rate
+* Multiple obstacle types
+* Fair obstacle generation
+
+---
+
+## 💥 Collision Detection
+
+* Pixel-based collision
+* 80% hitbox fairness
+* Explosion particle effects
+* Instant game over detection
+
+---
+
+## 🏆 Score System
+
+* Continuous score increase
+* Speed increases over time
+* Spawn interval decreases
+* Local high score saving
+
+---
+
+# 🎨 UI Design
+
+## 🌈 Theme
+
+* 🌌 Dark Cyberpunk Background
+* 💙 Neon Cyan Highlights
+* ✨ Glow Effects
+* 🪟 Glassmorphism Cards
+
+---
+
+## ✨ Animations
+
+* 🌟 Floating particles
+* 💫 Pulsing glow
+* 🛣️ Lane movement effects
+* 📳 Game over shake animation
+
+---
+
+# 📱 Screens
+
+| Screen             | Description                   |
+| ------------------ | ----------------------------- |
+| 🏁 Start Screen    | Play Game & Connect Bluetooth |
+| 🎮 Gameplay        | Endless Runner Experience     |
+| 💀 Game Over       | Score & Restart               |
+| 📡 Bluetooth Panel | Device Connection             |
+| 🔌 Hardware Setup  | Controller Configuration      |
+
+---
+
+# 🔌 Hardware Setup
+
+## Required Components
+
+* ESP32 / Arduino
+* HC-05 / HC-06 Bluetooth Module
+* 2 Push Buttons
+* Jumper Wires
+* Breadboard (Optional)
+
+---
+
+# 🔧 Circuit Diagram
+
+```text
+ESP32 / Arduino        HC-05 Bluetooth
+
+VCC   ----------------> VCC
+GND   ----------------> GND
+TX    ----------------> RX
+RX    ----------------> TX
+```
+
+### Push Buttons
+
+```text
+LEFT BUTTON   → GPIO 2
+RIGHT BUTTON  → GPIO 3
+```
+
+---
+
+# 🚀 Future Improvements
+
+* 🎵 Background music & sound effects
+* 👤 Multiple player skins
+* 🌍 Online leaderboard
+* 🏅 Achievement system
+* 🎁 Daily rewards
+* ☁️ Firebase cloud save
+* 🎮 Gamepad support
+* 🌎 Multiplayer mode
+
+---
+
+# 📸 Preview
+
+> Add screenshots of:
+>
+> * 🏁 Start Screen
+> * 🎮 Gameplay
+> * 💀 Game Over Screen
+> * 📡 Bluetooth Connection
+> * 🔌 Hardware Setup
+
+---
+
+# 👨‍💻 Developed With
+
+* ❤️ Kotlin
+* 🎨 Jetpack Compose
+* 📡 Android Bluetooth API
+* ⚡ Kotlin Coroutines
+* 🏗️ MVVM Architecture
+
+---
+
+# ⭐ If you like this project
+
+Give this repository a **⭐ Star** and support the project!
